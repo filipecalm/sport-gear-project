@@ -46,22 +46,31 @@ export default function RequestsPage() {
         return (
           <div className={styles.box}>
             <div className={styles.description}>
-              <div>
+              <div className={styles.order}>
                 <h3>PEDIDO Nº {order._id} </h3>
               </div>
               {order.OrdersProductId.map(orderProduct => (
                 <div>
-                  <div className={styles.image}>
-                    <img src={`${serverUrl}/images/product/${orderProduct.productsId.images}`} alt={orderProduct.productsId.name} />
-                  </div>
-                  <h3>NOME: {orderProduct.productsId.name}</h3>
-                  <h3>QTD: {orderProduct.amount}</h3>
-                  <h3>DATA: {new Date(orderProduct.date).toLocaleString('en-GB')}</h3>
-                  <h3>R$ {orderProduct.productsId.price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+                  <h4>NOME: {orderProduct.productsId.name}</h4>
+                  <h4>QTD: {orderProduct.amount}</h4>
+                  <h4>DATA: {new Date(orderProduct.date).toLocaleString('en-GB')}</h4>
+                  <h4>
+                    R${' '}
+                    {orderProduct.productsId.price.toLocaleString('pt-BR', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    })}
+                  </h4>
                 </div>
               ))}
-              <div>
-                <h3>TOTAL R$ {order.priceTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h3>
+              <div className={styles.total}>
+                <h3>
+                  TOTAL R${' '}
+                  {order.priceTotal.toLocaleString('pt-BR', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}{' '}
+                </h3>
               </div>
             </div>
           </div>

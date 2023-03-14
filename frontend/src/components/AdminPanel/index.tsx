@@ -62,7 +62,6 @@ function AdminTable({
   setIsEdit,
   setSelectedId
 }: any) {
-  
   const filteredData = data.map((item: DataProps) => {
     const filteredItem: { [key: string]: any } = {};
     Object.keys(header).forEach((key: string) => {
@@ -97,6 +96,13 @@ function AdminTable({
     setSelectedId(id);
   };
 
+  function formatCurrency(value: number): string {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(value);
+  }
+
   return (
     <div className={styles.table}>
       <Table striped="columns" className={styles.responsiveTable}>
@@ -113,8 +119,9 @@ function AdminTable({
             <tr key={item._id}>
               {Object.keys(item).map((key: string) => (
                 <td key={key}>
-                  {(key === 'price' || key === 'priceTotal') && 'R$ '}
-                  {item[key]}
+                  {key === 'price' || key === 'priceTotal'
+                    ? formatCurrency(item[key])
+                    : item[key]}
                 </td>
               ))}
               <td>
@@ -211,29 +218,33 @@ export default function AdminPanel() {
       <div className={styles.links}>
         <button
           onClick={() => setActiveCategory('product')}
-          className={`${styles.btn} ${activeCategory === 'product' && styles.activeButton
-            }`}
+          className={`${styles.btn} ${
+            activeCategory === 'product' && styles.activeButton
+          }`}
         >
           Produtos
         </button>
         <button
           onClick={() => setActiveCategory('category')}
-          className={`${styles.btn} ${activeCategory === 'category' && styles.activeButton
-            }`}
+          className={`${styles.btn} ${
+            activeCategory === 'category' && styles.activeButton
+          }`}
         >
           Categorias
         </button>
         <button
           onClick={() => setActiveCategory('user')}
-          className={`${styles.btn} ${activeCategory === 'user' && styles.activeButton
-            }`}
+          className={`${styles.btn} ${
+            activeCategory === 'user' && styles.activeButton
+          }`}
         >
           Clientes
         </button>
         <button
           onClick={() => setActiveCategory('card')}
-          className={`${styles.btn} ${activeCategory === 'card' && styles.activeButton
-            }`}
+          className={`${styles.btn} ${
+            activeCategory === 'card' && styles.activeButton
+          }`}
         >
           Pedidos
         </button>

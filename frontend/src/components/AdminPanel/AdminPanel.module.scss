@@ -55,6 +55,8 @@ th {
 
 td {
   border: spacing.$spacing-1 solid;
+  width: 27%;
+  padding: spacing.$spacing-10;
 }
 
 .buttons {
@@ -76,5 +78,5 @@ td {
 }
 
 .actions {
-  width: 50%;
+  width: 35%;
 }
