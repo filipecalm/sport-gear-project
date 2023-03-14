@@ -9,7 +9,6 @@ import EditProfile from './pages/EditProfile';
 import Register from './pages/Register';
 import Admin from './pages/Admin';
 import Protected from './components/Protected';
-import About from './components/AboutPage';
 import AboutPage from './pages/AboutPage';
 
 function App() {
