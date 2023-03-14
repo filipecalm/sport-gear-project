@@ -1,0 +1,80 @@
+@use '../../styles/colors';
+@use '../../styles/spacing';
+
+.text {
+  display: flex;
+  flex-direction: column;
+  padding: spacing.$spacing-50 spacing.$spacing-100;
+  gap: spacing.$spacing-10;
+  padding-bottom: spacing.$spacing-10;
+  font-size: 1.8rem;
+  font-weight: bold;
+
+  & h3 {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  width: spacing.$spacing-150;
+  background-color: colors.$white;
+  color: colors.$black;
+  border: spacing.$spacing-1 solid;
+  padding: spacing.$spacing-5;
+}
+.links {
+  display: flex;
+  gap: spacing.$spacing-20;
+  padding: spacing.$spacing-20 spacing.$spacing-100;
+}
+
+.links a:hover {
+  background-color: colors.$grey200;
+}
+
+.btnstyle {
+  margin: spacing.$spacing-20 0 0 spacing.$spacing-100;
+  color: colors.$orange;
+  border: spacing.$spacing-1 solid;
+}
+
+table {
+  border-collapse: collapse;
+  border: spacing.$spacing-1 solid colors.$black;
+  margin: spacing.$spacing-50 spacing.$spacing-100;
+}
+
+th {
+  border: spacing.$spacing-1 solid colors.$black;
+  padding: spacing.$spacing-10;
+  background-color: colors.$grey200;
+}
+
+td {
+  border: spacing.$spacing-1 solid;
+}
+
+.buttons {
+  display: flex;
+  gap: spacing.$spacing-20;
+  justify-content: center;
+}
+
+.button {
+  color: colors.$black;
+  padding: spacing.$spacing-3 spacing.$spacing-20;
+  display: flex;
+  background-color: colors.$grey;
+  border-radius: spacing.$spacing-5;
+}
+
+.activeButton {
+  background-color: colors.$orange;
+}
+
+.actions {
+  width: 50%;
+}
