@@ -55,7 +55,7 @@ Filipe Carneiro e Hector Ruan
 ### ✅ Documentação no Postman:
 
 <div style="display: inline_block">
-  <a href="https://documenter.getpostman.com/view/24865465/2s93JtPi44">
+  <a href="https://documenter.getpostman.com/view/24865465/2s93JwMgmX">
     <img align="center" alt="github" src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white" />
   </a>
   <br>
