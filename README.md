@@ -23,7 +23,10 @@ Filipe Carneiro e Hector Ruan
   </em>
 </p>
 
-![kanban](PRINT AQUI)
+![matriz-eisenhower](https://user-images.githubusercontent.com/103292859/225138069-586c6b57-82ba-4278-940c-61ee5649126e.jpeg)
+
+<img width="1536" alt="kanban" src="https://user-images.githubusercontent.com/103292859/225138045-33546e86-0af6-42d7-8937-caff96c08499.png">
+
 
 ### ✅ Ferramentas utilizadas:
 
