@@ -74,7 +74,8 @@ Filipe Carneiro e Hector Ruan
       -  JWT_TOKEN_SECRET=desafiofinal<br>
       -  HOST=localhost<br>
       -  CLIENT_PORT=3000<br><br>
-     📚 Digite no terminal o comando 'npm run dev' para inicar o nodemon em instância de desenvolvimento.<br>
+     📚 Digite no terminal o comando 'npm run dev' para iniciar o nodemon em instância de desenvolvimento <u>OU:</u><br>
+     📚 Digite no terminal o comando 'npm start' para iniciar o projeto<br>
   </em>
 </p>
 
@@ -85,7 +86,7 @@ Filipe Carneiro e Hector Ruan
     📚 Para instalar as dependências do frontend do projeto, digite 'npm install' no terminal dentro da pasta 'frontend' do projeto<br>
     📚 Adicione o arquivo ".env" (dentro da pasta frontend) e coloque essas informações: <br>
       -  REACT_APP_SERVER_URL=http://localhost:5000;<br><br>
-    📚  Digite no terminal o comando 'npm start' para inicar o projeto.<br>
+    📚  Digite no terminal o comando 'npm start' para iniciar o projeto.<br>
   </em>
 </p>
 
