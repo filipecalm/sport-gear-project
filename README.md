@@ -61,12 +61,20 @@ Filipe Carneiro e Hector Ruan
   <br>
 </div>
 
-### ✅ Iniciando o projeto - backend:
+### ✅ Iniciando o projeto - backend
 <p>
   <em>
-    📚 Para instalar as dependências do backend do projeto, digite npm install no terminal dentro da pasta raiz do projeto.<br>
+    📚 Para instalar as dependências, digite 'npm install' no terminal dentro da pasta backend do projeto.<br>
     📚 Inicie uma conexão local com o MongoDB Compass.<br>
-    📚 Digite no terminal o comando npm run dev para inicar o nodemon em instância de desenvolvimento.<br>
+    📚 Adicione o arquivo ".env" (dentro da pasta backend) e coloque essas informações: <br>
+      - SERVER_PORT=5000<br>
+      - DB_DIALECT=mongodb<br>
+      - MONGODB_PORT=27017<br>
+      - DB_NAME=local<br>
+      - JWT_TOKEN_SECRET=desafiofinal<br>
+      - HOST=localhost<br>
+      - CLIENT_PORT=3000<br>
+     📚 Digite no terminal o comando 'npm run dev' para inicar o nodemon em instância de desenvolvimento.<br>
   </em>
 </p>
 
@@ -74,11 +82,19 @@ Filipe Carneiro e Hector Ruan
 <p>
   <em>
     📚 O frontend foi criado utilizando o framework React. Para iniciar o projeto digite 'create-react-app' no terminal.<br>
-    📚 Para instalar as dependências do frontend do projeto, digite 'npm start' no terminal dentro da pasta raiz do projeto.<br>
-    📚 Execute o aplicativo no modo de desenvolvimento e abra (http://localhost:3000) para visualizá-lo no navegador. A página será recarregada se você fizer edições.<br>
-    📚 Digite 'npm run build' para criar o aplicativo para produção na pasta `build`.<br>
+    📚 Para instalar as dependências do frontend do projeto, digite 'npm install' no terminal dentro da pasta raiz do projeto.<br>
+    📚 Adicione o arquivo ".env" (dentro da pasta frontend) e coloque essas informações: <br>
+      - REACT_APP_SERVER_URL=http://localhost:5000;<br>
+    📚  Digite no terminal o comando 'npm start' para inicar o projeto.<br>
   </em>
 </p>
+
+✅ Iniciando o projeto - frontend:
+
+📚 O projeto foi desenvolvido utilizando o framework React;
+📚 Para iniciar o projeto e instalar as dependências digite npm install dentro da pasta frontend do projeto;
+
+
 
 ### ✅ Objetivo de aprendizagem:
 <p>
