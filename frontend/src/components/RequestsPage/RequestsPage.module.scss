@@ -2,12 +2,14 @@
 @use '../../styles/spacing';
 
 .container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(1, 1fr);
   padding: spacing.$spacing-180;
   gap: 90px;
 
   @media (max-width: 768px) {
-    display: flex;
+    display: grid;
     flex-direction: column;
     gap: spacing.$spacing-30;
   }
