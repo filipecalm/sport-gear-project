@@ -127,11 +127,11 @@ function AdminTable({
               <td>
                 <div className={styles.buttons}>
                   {category !== 'card' && (
-                    <div className={styles.button}>
+                    <div className={styles.bntGreen}>
                       <button onClick={() => editItem(item._id)}>Editar</button>
                     </div>
                   )}
-                  <div className={styles.button}>
+                  <div className={styles.bntRed}>
                     <button onClick={() => deleteItem(item._id)}>
                       Excluir
                     </button>
