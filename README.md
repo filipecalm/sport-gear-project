@@ -81,20 +81,13 @@ Filipe Carneiro e Hector Ruan
 ### ✅ Iniciando o projeto - frontend:
 <p>
   <em>
-    📚 O frontend foi criado utilizando o framework React. Para iniciar o projeto digite 'create-react-app' no terminal.<br>
-    📚 Para instalar as dependências do frontend do projeto, digite 'npm install' no terminal dentro da pasta raiz do projeto.<br>
+    📚 O frontend foi criado utilizando o framework React.<br>
+    📚 Para instalar as dependências do frontend do projeto, digite 'npm install' no terminal dentro da pasta 'frontend' do projeto<br>
     📚 Adicione o arquivo ".env" (dentro da pasta frontend) e coloque essas informações: <br>
       -  REACT_APP_SERVER_URL=http://localhost:5000;<br><br>
     📚  Digite no terminal o comando 'npm start' para inicar o projeto.<br>
   </em>
 </p>
-
-✅ Iniciando o projeto - frontend:
-
-📚 O projeto foi desenvolvido utilizando o framework React;
-📚 Para iniciar o projeto e instalar as dependências digite npm install dentro da pasta frontend do projeto;
-
-
 
 ### ✅ Objetivo de aprendizagem:
 <p>
