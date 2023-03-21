@@ -67,13 +67,13 @@ Filipe Carneiro e Hector Ruan
     📚 Para instalar as dependências, digite 'npm install' no terminal dentro da pasta backend do projeto.<br>
     📚 Inicie uma conexão local com o MongoDB Compass.<br>
     📚 Adicione o arquivo ".env" (dentro da pasta backend) e coloque essas informações: <br>
-      <li> SERVER_PORT=5000<br>
-      <li> DB_DIALECT=mongodb<br>
-      <li> MONGODB_PORT=27017<br>
-      <li> DB_NAME=local<br>
-      <li> JWT_TOKEN_SECRET=desafiofinal<br>
-      <li> HOST=localhost<br>
-      <li> CLIENT_PORT=3000<br>
+      -  SERVER_PORT=5000<br>
+      -  DB_DIALECT=mongodb<br>
+      -  MONGODB_PORT=27017<br>
+      -  DB_NAME=local<br>
+      -  JWT_TOKEN_SECRET=desafiofinal<br>
+      -  HOST=localhost<br>
+      -  CLIENT_PORT=3000<br><br>
      📚 Digite no terminal o comando 'npm run dev' para inicar o nodemon em instância de desenvolvimento.<br>
   </em>
 </p>
@@ -84,7 +84,7 @@ Filipe Carneiro e Hector Ruan
     📚 O frontend foi criado utilizando o framework React. Para iniciar o projeto digite 'create-react-app' no terminal.<br>
     📚 Para instalar as dependências do frontend do projeto, digite 'npm install' no terminal dentro da pasta raiz do projeto.<br>
     📚 Adicione o arquivo ".env" (dentro da pasta frontend) e coloque essas informações: <br>
-      <li> REACT_APP_SERVER_URL=http://localhost:5000;<br>
+      -  REACT_APP_SERVER_URL=http://localhost:5000;<br><br>
     📚  Digite no terminal o comando 'npm start' para inicar o projeto.<br>
   </em>
 </p>
