@@ -25,7 +25,7 @@ export default function ProductsList() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
 
-  const productsPerPage = 10;
+  const productsPerPage = 12;
   const pagesCount = Math.ceil(products.length / productsPerPage);
 
   const handleNextPage = () => {
