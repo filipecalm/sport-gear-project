@@ -119,7 +119,7 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
         <Input
           id="categoryid"
           name="categoryid"
-          placeholder="categoryid"
+          placeholder="ID da Categoria"
           value={formik.values.categoryid}
           onChange={formik.handleChange}
           required
