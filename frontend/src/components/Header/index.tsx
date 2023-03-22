@@ -42,6 +42,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
             </Link>
           </div>
           <div className={styles.linksWrapper}>
+            <Link texto="Home" redirect="/" />
             <Link texto="Produtos" redirect="/products" />
             <Link texto="Sobre" redirect="/sobre" />
           </div>
@@ -99,6 +100,9 @@ export default function Header({ isAdmin = false }: HeaderProps) {
           <div className={styles.mobileMenu}>
             <ul>
               <li>
+                <Link texto="Home" redirect="/" />
+              </li>
+              <li>
                 <Link texto="Produtos" redirect="/loja" />
               </li>
               <li>
@@ -122,9 +126,12 @@ export default function Header({ isAdmin = false }: HeaderProps) {
           </div>
           <nav className={styles.navWrapper}>
             <ul className={styles.iconsWrapper}>
-              <li>Painel Administrativo</li>
+            <li><Link texto="Home" redirect="/" /></li>
+              <li><Link texto="Painel Administrativo" redirect="/admin" /></li>
               <li>
-                <a href="/">Sair</a>
+                <Link onClick={handleLogOut} redirect="/">
+                  Sair
+                </Link>
               </li>
             </ul>
           </nav>
@@ -133,5 +140,5 @@ export default function Header({ isAdmin = false }: HeaderProps) {
     );
   };
 
-  return <>{isAdmin ? <AdminHeader /> : <RegularHeader />}</>;
+  return <>{isAdmin ? <AdminHeader /> : <RegularHeader />}</>;
 }
