@@ -65,19 +65,19 @@ td {
   justify-content: center;
 }
 
-.bntGreen,
-.bntRed {
+.btnGreen,
+.btnRed {
   color: colors.$white;
   padding: spacing.$spacing-3 spacing.$spacing-20;
   display: flex;
   border-radius: spacing.$spacing-5;
 }
 
-.bntGreen {
+.btnGreen {
   background-color: colors.$green;
 }
 
-.bntRed {
+.btnRed {
   background-color: colors.$red;
 }
 
