@@ -136,6 +136,7 @@ function AdminTable({
                     : item[key]}
                 </td>
               ))}
+<<<<<<< HEAD
               <td className={styles.actions}>
                 {category !== 'card' && (
                   <button className={styles.btnGreen} onClick={() => editItem(item._id)}>Editar</button>
@@ -143,6 +144,21 @@ function AdminTable({
                 <button className={styles.btnRed} onClick={() => deleteItem(item._id)}>
                   Excluir
                 </button>
+=======
+              <td>
+                <div className={styles.buttons}>
+                  {category !== 'card' && (
+                    <div className={styles.btnGreen}>
+                      <button onClick={() => editItem(item._id)}>Editar</button>
+                    </div>
+                  )}
+                  <div className={styles.btnRed}>
+                    <button onClick={() => deleteItem(item._id)}>
+                      Excluir
+                    </button>
+                  </div>
+                </div>
+>>>>>>> df4540e5904cbf5e0e12b44bb58923de179cf215
               </td>
             </tr>
           ))}

@@ -137,6 +137,7 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
         />
       </FormControl>
       <FormControl mt={4}>
+<<<<<<< HEAD
         <Select
           id="category"
           name="category"
@@ -149,6 +150,14 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
             formik.setFieldValue('categoryid', categoryId);
           }}
 
+=======
+        <Input
+          id="categoryid"
+          name="categoryid"
+          placeholder="ID da Categoria"
+          value={formik.values.categoryid}
+          onChange={formik.handleChange}
+>>>>>>> df4540e5904cbf5e0e12b44bb58923de179cf215
           required
         >
           {categories.map(cat => (
