@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
-import { Button } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
 import Table from 'react-bootstrap/Table';
 import ModalAdmin from '../ModalAdmin';
 import styles from './AdminPanel.module.scss';
@@ -65,10 +66,12 @@ function AdminTable({
   const filteredData = data.map((item: DataProps) => {
     const filteredItem: { [key: string]: any } = {};
     Object.keys(header).forEach((key: string) => {
-      filteredItem[key] = item[key];
+      filteredItem[key] = item[key]; //aqui
     });
     return filteredItem;
   });
+
+  const toast = useToast();
 
   const deleteItem = async (id: string) => {
     try {
@@ -82,14 +85,23 @@ function AdminTable({
           }
         }
       );
-      await response.json();
-
+  
+      if (!response.ok) {
+        throw new Error('Error deleting item');
+      }
+  
       const filteredData = data.filter((item: DataProps) => item._id !== id);
       setData(filteredData);
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Ocorreu um erro ao processar a requisição.',
+        description: 'Por favor, tente novamente mais tarde.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     }
-  };
+  };  
 
   const editItem = (id: string) => {
     setIsEdit(true);
@@ -109,7 +121,7 @@ function AdminTable({
         <thead>
           <tr>
             {Object.keys(header).map((item: string) => (
-              <th>{header[item]}</th>
+              <th key={item}>{header[item]}</th> //aqui
             ))}
             <th className={styles.actions}>Ações</th>
           </tr>
@@ -118,25 +130,19 @@ function AdminTable({
           {filteredData.map((item: DataProps) => (
             <tr key={item._id}>
               {Object.keys(item).map((key: string) => (
-                <td key={key}>
+                <td className={styles.cells} key={key}>
                   {key === 'price' || key === 'priceTotal'
                     ? formatCurrency(item[key])
                     : item[key]}
                 </td>
               ))}
-              <td>
-                <div className={styles.buttons}>
-                  {category !== 'card' && (
-                    <div className={styles.bntGreen}>
-                      <button onClick={() => editItem(item._id)}>Editar</button>
-                    </div>
-                  )}
-                  <div className={styles.bntRed}>
-                    <button onClick={() => deleteItem(item._id)}>
-                      Excluir
-                    </button>
-                  </div>
-                </div>
+              <td className={styles.actions}>
+                {category !== 'card' && (
+                  <button className={styles.btnGreen} onClick={() => editItem(item._id)}>Editar</button>
+                )}
+                <button className={styles.btnRed} onClick={() => deleteItem(item._id)}>
+                  Excluir
+                </button>
               </td>
             </tr>
           ))}
@@ -147,6 +153,7 @@ function AdminTable({
 }
 
 export default function AdminPanel() {
+  const toast = useToast();
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [isOpen, setIsOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -156,8 +163,8 @@ export default function AdminPanel() {
     useState<CategoryProps['category']>('product');
   const [data, setData] = useState<DataProps>();
   const userStorageData = localStorage.getItem('userData');
-  const userData = userStorageData ? JSON.parse(userStorageData) : null;
-
+  console.log(userStorageData)
+  const userData = userStorageData ? JSON.parse(userStorageData) : 'Admin';
   const fetchListData = async () => {
     try {
       const response = await fetch(`${serverUrl}/${activeCategory}`, {
@@ -169,7 +176,13 @@ export default function AdminPanel() {
       const data = await response.json();
       setData(data);
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Ocorreu um erro ao processar a requisição.',
+        description: 'Por favor, tente novamente mais tarde.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
@@ -184,8 +197,15 @@ export default function AdminPanel() {
       const data = await response.json();
       setSelectedItemData(data);
       setIsOpen(true);
+
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Ocorreu um erro ao processar a requisição.',
+        description: 'Por favor, tente novamente mais tarde.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
@@ -195,7 +215,6 @@ export default function AdminPanel() {
   };
 
   const onCloseModal = () => {
-    console.log('onCloseModal');
     setIsOpen(false);
     setSelectedId(undefined);
     setSelectedItemData(undefined);
@@ -213,47 +232,40 @@ export default function AdminPanel() {
     <main>
       <div className={styles.text}>
         <h1>Painel Administrativo</h1>
-        <h3>Bem vindo, {userData?.name}!</h3>
+        <h3>Bem vindo, {userData.name}!</h3>
       </div>
       <div className={styles.links}>
         <button
           onClick={() => setActiveCategory('product')}
-          className={`${styles.btn} ${
-            activeCategory === 'product' && styles.activeButton
-          }`}
+          className={`${styles.btn} ${activeCategory === 'product' && styles.activeButton
+            }`}
         >
           Produtos
         </button>
         <button
           onClick={() => setActiveCategory('category')}
-          className={`${styles.btn} ${
-            activeCategory === 'category' && styles.activeButton
-          }`}
+          className={`${styles.btn} ${activeCategory === 'category' && styles.activeButton
+            }`}
         >
           Categorias
         </button>
         <button
           onClick={() => setActiveCategory('user')}
-          className={`${styles.btn} ${
-            activeCategory === 'user' && styles.activeButton
-          }`}
+          className={`${styles.btn} ${activeCategory === 'user' && styles.activeButton
+            }`}
         >
           Clientes
         </button>
         <button
           onClick={() => setActiveCategory('card')}
-          className={`${styles.btn} ${
-            activeCategory === 'card' && styles.activeButton
-          }`}
+          className={`${styles.btn} ${activeCategory === 'card' && styles.activeButton
+            }`}
         >
           Pedidos
         </button>
       </div>
-      <div>
-        <Button className={styles.btnstyle} onClick={() => registerItem()}>
-          Cadastrar {categoryTranslation[activeCategory]}
-        </Button>
-      </div>
+      <button className={styles.btnStyle} onClick={() => registerItem()}>Cadastrar {categoryTranslation[activeCategory]}
+      </button>
       {data && (
         <AdminTable
           header={getHeader(activeCategory)}
@@ -277,3 +289,5 @@ export default function AdminPanel() {
     </main>
   );
 }
+
+

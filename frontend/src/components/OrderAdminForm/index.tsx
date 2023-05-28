@@ -1,7 +1,8 @@
-import { Button, Input, FormControl, useToast } from '@chakra-ui/react';
+import { Button, Input, FormControl, Select, useToast } from '@chakra-ui/react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { submitAdminModalForm } from '../../utils/form';
+import { useEffect, useState } from 'react';
 
 export default function OrderAdminForm({ setIsOpen, data, onClose }: any) {
   const OrderSchema = Yup.object({
@@ -11,6 +12,22 @@ export default function OrderAdminForm({ setIsOpen, data, onClose }: any) {
   });
   const toast = useToast();
   const token = localStorage.getItem('token');
+
+  interface Product {
+    _id: string;
+    name: string;
+  }
+
+  const [products, setProducts] = useState<Product[]>([]);
+  useEffect(() => {
+    const serverUrl = process.env.REACT_APP_SERVER_URL
+    const fetchProducts = async () => {
+      const response = await fetch(`${serverUrl}/product`);
+      const products = await response.json() as Product[];
+      setProducts(products);
+    };
+    fetchProducts();
+  }, []);
 
   const emptyInitialValues = {
     userId: '',
@@ -69,8 +86,6 @@ export default function OrderAdminForm({ setIsOpen, data, onClose }: any) {
     validationSchema: OrderSchema
   });
 
-  console.log(formik);
-
   return (
     <form onSubmit={formik.handleSubmit}>
       <FormControl mt={4}>
@@ -84,14 +99,21 @@ export default function OrderAdminForm({ setIsOpen, data, onClose }: any) {
         />
       </FormControl>
       <FormControl mt={4}>
-        <Input
+      <Select
           id="productsId"
           name="productsId"
-          placeholder="ID do produto"
-          value={formik.values.name}
+          placeholder="Produto"
+          value={formik.values.productsId}
           onChange={formik.handleChange}
           required
-        />
+        >
+          <option value="">Selecione um produto</option>
+          {products.map(product => (
+            <option key={product._id} value={product._id}>
+              {product.name}
+            </option>
+          ))}
+        </Select>
       </FormControl>
       <FormControl mt={4}>
         <Input

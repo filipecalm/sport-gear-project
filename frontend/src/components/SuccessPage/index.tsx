@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './SuccessPage.module.scss';
+import { useToast } from '@chakra-ui/react';
 
 interface Product {
   description: string;
@@ -26,6 +28,7 @@ export default function SuccessPage() {
   const { id } = useParams();
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [order, setOrder] = useState<Order>();
+  const toast = useToast();
 
   const fetchOrder = async () => {
     try {
@@ -33,7 +36,13 @@ export default function SuccessPage() {
       const data = await response.json();
       setOrder(data);
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Ocorreu um erro ao processar a requisição.',
+        description: 'Por favor, tente novamente mais tarde.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
@@ -72,3 +81,5 @@ export default function SuccessPage() {
     </main>
   );
 }
+
+

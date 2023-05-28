@@ -73,7 +73,13 @@ export default function ModalLogin({ isOpen, setIsOpen }: ModalLoginProps) {
         }
       } catch (error) {
         localStorage.setItem('isLoggedIn', 'false');
-        console.log(error);
+        toast({
+          title: 'Ocorreu um erro ao processar a requisição.',
+          description: 'Por favor, tente novamente mais tarde.',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
       } finally {
         setIsLoading(false);
       }

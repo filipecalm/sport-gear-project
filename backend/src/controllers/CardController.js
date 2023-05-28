@@ -97,7 +97,6 @@ module.exports = class CardController {
   static async deleteCard(req, res) {
     try {
       const { id } = req.params
-
       const orders = await Orders.findById(id)
 
       Promise.all(

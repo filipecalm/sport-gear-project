@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import styles from './RequestsPage.module.scss';
+import { useToast } from '@chakra-ui/react';
 
 interface Product {
   description: string;
@@ -25,6 +27,7 @@ export default function RequestsPage() {
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const userId = localStorage.getItem('userId');
   const [orders, setOrders] = useState<Order[]>([]);
+  const toast = useToast()
 
   const fetchOrders = async () => {
     try {
@@ -32,7 +35,13 @@ export default function RequestsPage() {
       const data = await response.json();
       setOrders(data);
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Ocorreu um erro ao processar a requisição.',
+        description: 'Por favor, tente novamente mais tarde.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 

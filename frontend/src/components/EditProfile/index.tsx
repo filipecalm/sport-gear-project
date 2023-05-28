@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -87,7 +88,7 @@ export default function EditProfile() {
             duration: 9000,
             isClosable: true
           });
-          navigate('/products');
+          navigate('/product');
         } else {
           toast({
             title: 'Erro ao atualizar cadastro.',
@@ -98,7 +99,13 @@ export default function EditProfile() {
           });
         }
       } catch (error) {
-        console.log(error);
+        toast({
+          title: 'Ocorreu um erro ao processar a requisição.',
+          description: 'Por favor, tente novamente mais tarde.',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
       }
     }
   });
@@ -163,7 +170,7 @@ export default function EditProfile() {
 
       <Flex className={styles.flexName}>
         <Box className={styles.box}>
-          <form onSubmit={formik.handleSubmit}>
+          <form onSubmit={formik.handleSubmit} title='Nome'>
             <VStack className={styles.vStack}>
               <FormControl>
                 <FormLabel htmlFor="name">Nome Completo</FormLabel>

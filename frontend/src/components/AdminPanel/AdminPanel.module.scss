@@ -20,11 +20,19 @@
   display: flex;
   justify-content: center;
   width: spacing.$spacing-150;
-  background-color: colors.$white;
+  background-color: colors.$orange;
   color: colors.$black;
   border: spacing.$spacing-1 solid;
+  border-radius: spacing.$spacing-3;
   padding: spacing.$spacing-5;
+  transition: all ease-in-out .3s;
 }
+
+.btn:hover {
+  background: colors.$red;
+  color: colors.$white;
+}
+
 .links {
   display: flex;
   gap: spacing.$spacing-20;
@@ -35,10 +43,21 @@
   background-color: colors.$grey200;
 }
 
-.btnstyle {
-  margin: spacing.$spacing-20 0 0 spacing.$spacing-100;
+.btnStyle {
+  display: flex;
+  justify-content: center;
   color: colors.$orange;
+  margin: spacing.$spacing-20 0 0 spacing.$spacing-100;
   border: spacing.$spacing-1 solid;
+  border-radius: spacing.$spacing-3;
+  width: spacing.$spacing-180;
+  background-color: colors.$white;
+  padding: spacing.$spacing-5;
+  transition: all ease-in-out .3s;
+}
+
+.btnStyle:hover {
+  background: colors.$grey200;
 }
 
 table {
@@ -49,14 +68,15 @@ table {
 
 th {
   border: spacing.$spacing-1 solid colors.$black;
-  padding: spacing.$spacing-10;
   background-color: colors.$grey200;
 }
 
-td {
+.cells {
+
   border: spacing.$spacing-1 solid;
-  width: 27%;
-  padding: spacing.$spacing-10;
+  width: spacing.$spacing-250;
+  padding: spacing.$spacing-7;
+  text-align: center;
 }
 
 .buttons {
@@ -65,19 +85,23 @@ td {
   justify-content: center;
 }
 
-.bntGreen,
-.bntRed {
+.btnGreen,
+.btnRed {
+  width: 48%;
   color: colors.$white;
   padding: spacing.$spacing-3 spacing.$spacing-20;
-  display: flex;
+  display: inline-block;
+  grid-template-columns: (2, 5fr);
   border-radius: spacing.$spacing-5;
+  gap: spacing.$spacing-1;
+  margin-left: 1.5%;
 }
 
-.bntGreen {
+.btnGreen {
   background-color: colors.$green;
 }
 
-.bntRed {
+.btnRed {
   background-color: colors.$red;
 }
 
@@ -86,5 +110,6 @@ td {
 }
 
 .actions {
-  width: 35%;
+  width: spacing.$spacing-200;
+  border: spacing.$spacing-1 solid;
 }

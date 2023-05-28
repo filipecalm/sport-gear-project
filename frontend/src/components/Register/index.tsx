@@ -93,7 +93,7 @@ export default function Register() {
             duration: 9000,
             isClosable: true,
           });
-          navigate('/products');
+          navigate('/product');
         } else {
           toast({
             title: 'Erro ao fazer o cadastro.',
@@ -106,7 +106,13 @@ export default function Register() {
         }
       } catch (error) {
         localStorage.setItem('isLoggedIn', 'false');
-        console.log(error);
+        toast({
+          title: 'Ocorreu um erro ao processar a requisição.',
+          description: 'Por favor, tente novamente mais tarde.',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
       }
     },
   });

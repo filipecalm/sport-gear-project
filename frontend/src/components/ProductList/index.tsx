@@ -69,7 +69,7 @@ export default function ProductList() {
                 <p>R$ {product.price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
               </div>
               <div>
-                <button className={styles.btn} onClick={() => addToCart()}>Adicionar ao carrinho</button>
+                <button className={styles.btn} onClick={() => addToCart()}>ADICIONAR AO CARRINHO</button>
               </div>
             </div>
           </div>

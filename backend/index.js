@@ -1,44 +1,39 @@
-require('dotenv/config')
-const express = require('express')
-const cors = require('cors')
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
 
-const app = express()
+dotenv.config();
 
-app.use(
-  cors({ origin: `http://${process.env.HOST}:${process.env.CLIENT_PORT}` })
-)
+const app = express();
 
-const bodyParser = require('body-parser')
+app.use(cors({ origin: `http://${process.env.HOST}:${process.env.CLIENT_PORT}` }));
 
-// Aumenta o limite de upload para 50mb (ou qualquer outro valor)
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
-app.use(bodyParser.json({ limit: '50mb' }))
-const conn = require('./src/database/db')
-const handleError = require('./src/helpers/handleError')
+// Increase upload limit to 50mb
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// Config JSON
-app.use(express.json())
-
-app.use(
-  express.urlencoded({
-    extended: true
-  })
-)
+const conn = require('./src/database/db');
+const handleError = require('./src/helpers/handleError');
 
 // Public Images
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 // routes
-const ProductRoutes = require('./src/routes/ProductRoutes')
-const UserRoutes = require('./src/routes/UserRoutes')
-const CategoryRoutes = require('./src/routes/CategoryRoutes')
-const CardRoutes = require('./src/routes/CardRoutes')
+const ProductRoutes = require('./src/routes/ProductRoutes');
+const UserRoutes = require('./src/routes/UserRoutes');
+const CategoryRoutes = require('./src/routes/CategoryRoutes');
+const CardRoutes = require('./src/routes/CardRoutes');
 
-app.use('/product', ProductRoutes)
-app.use('/user', UserRoutes)
-app.use('/category', CategoryRoutes)
-app.use('/card', CardRoutes)
+app.use(express.json());
 
-app.use(handleError)
+app.use('/product', ProductRoutes);
+app.use('/user', UserRoutes);
+app.use('/category', CategoryRoutes);
+app.use('/card', CardRoutes);
 
-app.listen(process.env.SERVER_PORT)
+app.use(handleError);
+
+const serverPort = process.env.SERVER_PORT || 3000;
+app.listen(serverPort, () => {
+  console.log(`Server listening on port ${serverPort}`);
+});

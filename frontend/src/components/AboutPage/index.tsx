@@ -3,8 +3,7 @@ import styles from './AboutPage.module.scss';
 export default function About() {
   return (
     <div className={styles.about}>
-     
-      <div className={styles.text}>
+     <div className={styles.text}>
         <div>
           <h1>SportGear Fitness</h1>
         </div>

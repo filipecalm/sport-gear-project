@@ -1,7 +1,10 @@
-import { Button, Input, FormControl, useToast } from '@chakra-ui/react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Button, Input, FormControl, Select, useToast } from '@chakra-ui/react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { submitAdminModalForm } from '../../utils/form';
+import { useEffect, useState } from 'react';
+
 
 export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
   const productSchema = Yup.object({
@@ -11,6 +14,23 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
     categoryid: Yup.string().required('Categoria é obrigatório'),
     images: Yup.mixed()
   });
+
+  interface Category {
+    _id: string;
+    name: string;
+  }
+
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/category`);
+      const categories = await response.json() as Category[];
+      setCategories(categories);
+    };
+
+    fetchCategories();
+  }, []);
 
   const toast = useToast();
   const token = localStorage.getItem('token');
@@ -22,10 +42,9 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
     categoryid: '',
     images: null
   };
-  const initialValues = data
-    ? { ...data, categoryid: data.categoryid?._id }
-    : emptyInitialValues;
 
+  const [initialValues, setInitialValues] = useState(data ? { ...data, categoryid: data.categoryid?._id } : emptyInitialValues);
+  
   const formik = useFormik({
     initialValues,
     onSubmit: async formData => {
@@ -42,8 +61,17 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
         toast
       };
       const response = await submitAdminModalForm(submitFormParams);
-      console.log(response);
-      if (response !== 'Acesso Negado!') {
+
+      if (response === 'Acesso Negado!' || response === 'Já existe um produto com este nome! Por favor, utilize outro nome!') {
+        toast({
+          title: 'Erro ao fazer a operação.',
+          description: 'Por favor tente novamente.',
+          status: 'error',
+          duration: 9000,
+          isClosable: true
+        });
+        
+      } else if (response !== 'Acesso Negado!'){
         formik.setSubmitting(false);
         formik.setStatus({ isSuccess: true });
 
@@ -55,14 +83,7 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
           isClosable: true
         });
         setIsOpen(false);
-      } else {
-        toast({
-          title: 'Erro ao fazer a operação.',
-          description: 'Por favor tente novamente.',
-          status: 'error',
-          duration: 9000,
-          isClosable: true
-        });
+
       }
     },
     validationSchema: productSchema
@@ -116,20 +137,34 @@ export default function ProductAdminForm({ setIsOpen, data, onClose }: any) {
         />
       </FormControl>
       <FormControl mt={4}>
-        <Input
-          id="categoryid"
-          name="categoryid"
-          placeholder="categoryid"
-          value={formik.values.categoryid}
-          onChange={formik.handleChange}
+        <Select
+          id="category"
+          name="category"
+          placeholder="Categoria"
+          value={formik.values.category}
+          onChange={event => {
+            formik.setFieldValue('category', event.target.value);
+            const category = categories.find((cat: { name: string; }) => cat.name === event.target.value);
+            const categoryId = category ? category._id : '';
+            formik.setFieldValue('categoryid', categoryId);
+          }}
+
           required
-        />
+        >
+          {categories.map(cat => (
+            <option key={cat._id} value={cat.name}>
+              {cat.name}
+            </option>
+          ))}
+        </Select>
       </FormControl>
+
       <Button
         colorScheme="blue"
         mr={3}
         sx={{ marginTop: '20px' }}
         type="submit"
+        disabled={formik.isSubmitting}
       >
         Salvar
       </Button>

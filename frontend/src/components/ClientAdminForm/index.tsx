@@ -5,14 +5,17 @@ import { useFormik } from 'formik';
 import { submitAdminModalForm } from '../../utils/form';
 import styles from './ClientAdminForm.module.scss';
 
+
+//MODIFICADO
 export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
   const isUpdate = data ? true : false;
+  const method = isUpdate ? 'PUT' : 'POST';
 
   const clientSchema = Yup.object({
-    name: isUpdate ? Yup.string() : Yup.string().required('Nome é obrigatório'),
-    email: isUpdate
+    name: isUpdate
       ? Yup.string()
-      : Yup.string().required('Email é obrigatório'),
+      : Yup.string()
+        .required('Nome é obrigatório'),
     cpf: isUpdate ? Yup.string() : Yup.string().required('CPF é obrigatório'),
     rg: Yup.string(),
     birth: Yup.string(),
@@ -20,21 +23,23 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
       ? Yup.string()
       : Yup.string().required('Telefone é obrigatório'),
     password: isUpdate
-      ? Yup.string()
-      : Yup.string().required('Senha é obrigatório'),
+      ? Yup.string().min(8)
+      : Yup.string().required('Senha é obrigatória').min(8, 'Senha deve ter no mínimo 8 caracteres'),
     confirmpassword: isUpdate
-      ? Yup.string()
+      ? Yup.string().min(8)
       : Yup.string().test(
-          'passwords-match',
-          'Os valores da senhas devem ser iguais',
-          function (value) {
-            return this.parent.password === value;
-          }
-        ),
+        'passwords-match',
+        'Os valores das senhas devem ser iguais',
+        function (value) {
+          return this.parent.password === value;
+        }
+      ).min(8, 'Senha deve ter no mínimo 8 caracteres'),
+
     gender: isUpdate
       ? Yup.string()
       : Yup.string().required('Gênero é obrigatório')
   });
+
 
   if (isUpdate)
     clientSchema.shape({
@@ -68,34 +73,54 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
   const formik = useFormik({
     initialValues,
     onSubmit: async formData => {
+      const headers = {
+        'Authorization': `Bearer ${token}`
+      };
+
+      const serverUrl = process.env.REACT_APP_SERVER_URL;
+
       const operation = isUpdate ? 'atualizado' : 'cadastrado';
-      const parsedData = {
-        ...formData,
-        cpf: formData.cpf.toString(),
-        rg: formData.rg ? formData.rg.toString() : undefined,
-        birth: formData.birth
-          ? new Date(formData.birth).toLocaleDateString('en-US', {
+
+      const submitFormParams = {
+        category: 'user',
+        fields: Object.keys(emptyInitialValues),
+        formData: {
+          ...formData,
+          cpf: formData.cpf.toString(),
+          rg: formData.rg ? formData.rg.toString() : undefined,
+          birth: formData.birth
+            ? new Date(formData.birth).toLocaleDateString('en-US', {
               timeZone: 'America/Sao_Paulo',
               month: '2-digit',
               day: '2-digit',
               year: 'numeric'
             })
-          : undefined,
-        phone: formData.phone.toString()
-      };
-      const submitFormParams = {
-        category: 'user',
-        fields: Object.keys(emptyInitialValues),
-        formData: parsedData,
+            : undefined,
+          phone: formData.phone.toString()
+        },
         setIsOpen,
         token,
         isUpdate,
         id: data ? data._id : '',
-        toast
+        toast,
+        method
       };
-      console.log(submitFormParams);
+
+      const parsedData = {
+        ...submitFormParams.formData,
+        userId: data ? data._id : undefined
+      };
+
+      const existingUser = await fetch(`${serverUrl}/user/${parsedData.userId}`, {
+        headers
+      });
+
+      if (existingUser.status === 200 && !isUpdate) {
+        formik.setFieldError('name', 'Já existe um usuário com esse nome');
+        return;
+      }
+
       const response = await submitAdminModalForm(submitFormParams);
-      console.log(response);
       if (response !== 'Acesso Negado!') {
         formik.setSubmitting(false);
         formik.setStatus({ isSuccess: true });
@@ -115,7 +140,6 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
           status: 'error',
           duration: 9000,
           isClosable: true
-          
         });
       }
     },
@@ -123,9 +147,9 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <FormControl mt={4}>
-        <Input 
+    <form onSubmit={formik.handleSubmit} title='Nome'>
+      <FormControl mt={4} title='Nome'>
+        <Input
           id="name"
           name="name"
           placeholder="Nome"
@@ -161,7 +185,7 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
           value={formik.values.cpf}
           isInvalid={!!(formik.errors.cpf && formik.touched.cpf)}
           errorBorderColor="red.300"
-          placeholder="CPF"
+          placeholder="CPF (Digite apenas números)"
           required={!isUpdate}
         />
       </FormControl>
@@ -170,7 +194,7 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
           id="rg"
           name="rg"
           type="number"
-          placeholder="RG"
+          placeholder="RG (Digite apenas números)"
           onChange={formik.handleChange}
           value={formik.values.rg}
         />
@@ -183,12 +207,14 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
           variant="filled"
           onChange={formik.handleChange}
           value={formik.values.gender}
+          required={!isUpdate}
         >
           {['Masculino', 'Feminino'].map(option => (
             <option key={option} value={option.toLowerCase()}>
               {option}
             </option>
           ))}
+
         </Select>
       </FormControl>
       <FormControl mt={4}>
@@ -227,6 +253,7 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
           value={formik.values.password}
           placeholder="Senha"
           isInvalid={!!formik.errors.password}
+          required={!isUpdate}
         />
       </FormControl>
       <FormControl mt={4}>
@@ -256,7 +283,19 @@ export default function ClientAdminForm({ setIsOpen, data, onClose }: any) {
         </FormControl>
       )}
 
-      <Button colorScheme="blue" sx={{ margin: '20px 0' }} mr={3} type="submit">
+      <Button colorScheme="blue" sx={{ margin: '20px 0' }} mr={3} type="submit"
+        onClick={() => {
+          if (formik.errors.password && formik.touched.password) {
+            toast({
+              title: 'Senha inválida',
+              description: 'A senha deve ter pelo menos 8 caracteres',
+              status: 'warning',
+              duration: 5000,
+              isClosable: true
+            });
+          }
+          formik.handleSubmit();
+        }}>
         Salvar
       </Button>
       <Button onClick={() => onClose()}>Cancelar</Button>

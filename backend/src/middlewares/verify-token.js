@@ -1,16 +1,16 @@
-const getToken = require('../helpers/get-token')
-const decodedToken = require('../helpers/token-decoded')
-const MESSAGE = require('../constants/messages')
+import getToken from '../helpers/get-token'
+import decodedToken from '../helpers/token-decoded'
+import { ERROR } from '../constants/messages'
 
 const checkToken = (req, res, next) => {
   if (!req.headers.authorization) {
-    return res.status(401).json(MESSAGE.ERROR.ACCESS_DENIED)
+    return res.status(401).json(ERROR.ACCESS_DENIED)
   }
 
   const token = getToken(req)
 
   if (!token) {
-    return res.status(401).json(MESSAGE.ERROR.ACCESS_DENIED)
+    return res.status(401).json(ERROR.ACCESS_DENIED)
   }
 
   try {
@@ -19,8 +19,8 @@ const checkToken = (req, res, next) => {
 
     next()
   } catch (err) {
-    return res.status(400).json(MESSAGE.ERROR.ACCESS_DENIED)
+    return res.status(400).json(ERROR.ACCESS_DENIED)
   }
 }
 
-module.exports = checkToken
+export default checkToken

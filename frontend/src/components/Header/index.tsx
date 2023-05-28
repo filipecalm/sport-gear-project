@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
-import logo from '../../assets/images/SportGear.png';
-import { FiShoppingCart, FiUser, FiAlignJustify } from 'react-icons/fi';
-import ModalLogin from '../ModalLogin';
 import Link from '../Link';
+import ModalLogin from '../ModalLogin';
 import styles from './Header.module.scss';
+import { useState, useEffect } from 'react';
+import { ChakraProvider } from "@chakra-ui/react"
+import logo from '../../assets/images/SportGear.png';
+import ColorModeSwitcher from '../ColorModeSwitcher/index.';
+import { FiShoppingCart, FiUser, FiAlignJustify } from 'react-icons/fi';
 
 interface HeaderProps {
   isAdmin?: boolean;
@@ -30,6 +32,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
 
   useEffect(() => {
     setIsUserLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+    localStorage.getItem('userData')
   }, [isModalOpen]);
 
   const RegularHeader = () => {
@@ -42,14 +45,20 @@ export default function Header({ isAdmin = false }: HeaderProps) {
             </Link>
           </div>
           <div className={styles.linksWrapper}>
-            <Link texto="Produtos" redirect="/products" />
+            <Link texto="Home" redirect="/" />
+            <Link texto="Produtos" redirect="/product" />
             <Link texto="Sobre" redirect="/sobre" />
           </div>
 
           <nav className={styles.navWrapper}>
             <ul className={styles.iconsWrapper}>
               <li>
-                <a href="/cart" className={styles.countWrapper}>
+                <ChakraProvider>
+                  <ColorModeSwitcher />
+                </ChakraProvider>
+              </li>
+              <li>
+                <a title="Produtos" href="/cart" className={styles.countWrapper}>
                   <FiShoppingCart />
                   {totalProductsInCart > 0 && (
                     <span className={styles.cartItemCount}>
@@ -69,7 +78,7 @@ export default function Header({ isAdmin = false }: HeaderProps) {
                         <FiUser />
                         <span>Minha conta</span>
                       </Link>
-                      <Link redirect="/requests">
+                      <Link redirect="/card">
                         <span>Meus pedidos</span>
                       </Link>
                       {isAdminUser && (
@@ -99,6 +108,9 @@ export default function Header({ isAdmin = false }: HeaderProps) {
           <div className={styles.mobileMenu}>
             <ul>
               <li>
+                <Link texto="Home" redirect="/" />
+              </li>
+              <li>
                 <Link texto="Produtos" redirect="/loja" />
               </li>
               <li>
@@ -122,9 +134,17 @@ export default function Header({ isAdmin = false }: HeaderProps) {
           </div>
           <nav className={styles.navWrapper}>
             <ul className={styles.iconsWrapper}>
-              <li>Painel Administrativo</li>
               <li>
-                <a href="/">Sair</a>
+                <ChakraProvider>
+                  <ColorModeSwitcher />
+                </ChakraProvider>
+              </li>
+              <li><Link texto="Home" redirect="/" /></li>
+              <li><Link texto="Painel Administrativo" redirect="/admin" /></li>
+              <li>
+                <Link onClick={handleLogOut} redirect="/">
+                  Sair
+                </Link>
               </li>
             </ul>
           </nav>
@@ -133,5 +153,5 @@ export default function Header({ isAdmin = false }: HeaderProps) {
     );
   };
 
-  return <>{isAdmin ? <AdminHeader /> : <RegularHeader />}</>;
+  return <>{isAdmin ? <AdminHeader /> : <RegularHeader />}</>;
 }

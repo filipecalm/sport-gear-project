@@ -1,6 +1,6 @@
-const getToken = require('../helpers/get-token')
-const decodedToken = require('../helpers/token-decoded')
-const { User } = require('../models')
+import getToken from '../helpers/get-token'
+import decodedToken from '../helpers/token-decoded'
+import { User } from '../models'
 
 const verifyAdmin = async (req, res, next) => {
   try {
@@ -15,4 +15,4 @@ const verifyAdmin = async (req, res, next) => {
   }
 }
 
-module.exports = verifyAdmin
+export default verifyAdmin

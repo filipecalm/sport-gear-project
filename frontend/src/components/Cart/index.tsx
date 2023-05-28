@@ -80,7 +80,6 @@ export default function Cart() {
         navigate(`/success/${data._id}`);
       })
       .catch(error => {
-        console.error(error);
         toast({
           title: 'Oops.',
           description: 'Ocorreu um erro, por favor tente novamente.',
@@ -142,7 +141,7 @@ export default function Cart() {
         <div>
           <Link
             texto="Adicionar mais itens"
-            redirect="/products"
+            redirect="/product"
             className={styles.btn}
           />
         </div>

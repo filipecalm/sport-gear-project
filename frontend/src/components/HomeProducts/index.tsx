@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import Link from '../Link';
 import Card from 'react-bootstrap/Card';
@@ -35,7 +36,7 @@ export default function HomeProducts() {
       <div className={styles.boxWrapper}>
         {products.slice(0, 3).map(product => {
           return (
-            <div className={styles.container}>
+            <div key={product._id} className={styles.container}>
               <Card className={styles.card}>
                 <Card.Img
                   className={styles.cardImage}
@@ -46,8 +47,8 @@ export default function HomeProducts() {
                     {product.name}
                   </Card.Title>
                   <Link
-                    texto="Saiba mais"
-                    redirect="products"
+                    texto="COMPRAR"
+                    redirect={`product/${product._id}`}
                     className={styles.btn}
                   />
                 </Card.Body>

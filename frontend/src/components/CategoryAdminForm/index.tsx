@@ -2,6 +2,7 @@ import { Button, Input, FormControl, useToast } from '@chakra-ui/react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { submitAdminModalForm } from '../../utils/form';
+import { Category } from '../../types';
 
 export default function CategoryAdminForm({ setIsOpen, data, onClose }: any) {
   const categorySchema = Yup.object({
@@ -9,7 +10,7 @@ export default function CategoryAdminForm({ setIsOpen, data, onClose }: any) {
   });
   const toast = useToast();
   const token = localStorage.getItem('token');
-
+  const serverUrl = process.env.REACT_APP_SERVER_URL
   const emptyInitialValues = {
     name: ''
   };
@@ -30,6 +31,19 @@ export default function CategoryAdminForm({ setIsOpen, data, onClose }: any) {
         id: data ? data._id : '',
         toast
       };
+
+      // Adiciona uma verificação para checar se o nome da categoria já existe
+      const existingCategory = await checkIfCategoryExists(formData.name);
+      if (existingCategory) {
+        return toast({
+          title: 'Erro ao fazer a operação.',
+          description: 'O nome da categoria já existe.',
+          status: 'error',
+          duration: 9000,
+          isClosable: true
+        });
+      }
+
       const response = await submitAdminModalForm(submitFormParams);
       if (response !== 'Acesso Negado!') {
         formik.setSubmitting(false);
@@ -56,11 +70,16 @@ export default function CategoryAdminForm({ setIsOpen, data, onClose }: any) {
     validationSchema: categorySchema
   });
 
-  console.log(formik);
+  const checkIfCategoryExists = async (name: string) => {
+    const response = await fetch(`${serverUrl}/category`);
+    const result = await response.json();
+    const existingCategory = result.find((category: Category) => category.name === name);
+    return existingCategory ? true : false;
+  };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <FormControl mt={4}>
+    <form onSubmit={formik.handleSubmit} title='Nome'>
+      <FormControl mt={4} label='Nome'>
         <Input
           id="name"
           name="name"
